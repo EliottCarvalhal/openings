@@ -1,7 +1,8 @@
 export interface Node {
+  _id: string;
   name: string;
   type: 'folder' | 'opening';
-  parent?: Node;
+  parent?: string;
   children: Node[];
   pgn?: string;
   description?: string;

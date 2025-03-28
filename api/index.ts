@@ -6,7 +6,6 @@ export const getNodes = async (): Promise<Node[] | undefined> => {
   try {
     const res = await fetch(`${baseUrl}/node`)
     const data = await res.json()
-    console.log(data)
     return data
   } catch (error) {
     console.log(error)
@@ -18,7 +17,6 @@ export const getNode = async (id: string): Promise<Node | undefined> => {
   try {
     const res = await fetch(`${baseUrl}/node/${id}`)
     const data = await res.json()
-    console.log(data)
     return data
   } catch (error) {
     console.log(error)
@@ -36,7 +34,6 @@ export const postNode = async (node: Node) => {
       body: JSON.stringify(node),
     })
     const data = await res.json()
-    console.log(data)
   } catch (error) {
     console.log(error)
   }

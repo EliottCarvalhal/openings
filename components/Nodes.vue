@@ -6,55 +6,63 @@
     @click.stop="selectNode(node)">
     <div
       v-if="node.type === 'folder'"
-      class="rounded-2xl px-2"
+      class="rounded-2xl px-2 cursor-pointer"
       :class="node.parent ? '' : 'w-full'">
       <v-icon icon="mdi-folder" class="pb-1" />
-      <span :class="isSelected(node) ? 'bg-blue-100' : ''">{{ node.name }}</span>
+      <span :class="['py-1 px-2 rounded-xl', isSelected(node) ? 'bg-blue-500' : '']">{{
+        node.name
+      }}</span>
       <component
+        class="cursor-pointer"
         v-if="node.children.length > 0"
         :is="node.type === 'folder' ? 'v-btn' : 'v-card'"
-        @click="toggleCollapse">
-        <v-icon v-if="collapsedRef" icon="mdi-chevron-up" class="ml-auto" />
+        @click="toggleCollapse(node)">
+        <v-icon v-if="!isCollapsed(node)" icon="mdi-chevron-up" class="ml-auto" />
         <v-icon v-else icon="mdi-chevron-down" class="ml-auto" />
       </component>
       <Nodes
-        v-if="!collapsedRef"
+        v-if="!isCollapsed(node)"
         :nodes="node.children"
         variant="submit"
-        collapsed
         @select="onChildSelect"
         :selected-node="selectedNode" />
     </div>
     <div v-else>
-      <div class="rounded-2xl px-2">
+      <button class="rounded-2xl px-2" @click="selectNode(node)">
         <v-icon icon="mdi-chess-pawn" />
-        {{ node.name }}
-      </div>
+        <span :class="['py-1 px-2 rounded-xl', isSelected(node) ? 'bg-blue-500' : '']">{{
+          node.name
+        }}</span>
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import type { Node } from '~/models'
 
 import Nodes from '~/components/Nodes.vue'
 
 const props = defineProps<{
   nodes?: Node[]
-  collapsed?: boolean
   selectedNode?: Node
   variant: 'submit' | 'view'
 }>()
 const emit = defineEmits(['select'])
 
-const collapsedRef = ref(props.collapsed)
+const collapsedMap = reactive<Record<string, boolean>>({})
 
-const toggleCollapse = () => {
-  collapsedRef.value = !collapsedRef.value
+const toggleCollapse = (node: Node) => {
+  collapsedMap[node._id] =
+    collapsedMap[node._id] === undefined ? false : !collapsedMap[node._id]
 }
+
+const isCollapsed = (node: Node) => {
+  return collapsedMap[node._id] === undefined ? true : collapsedMap[node._id]
+}
+
 const isSelected = (node: Node) =>
-  props.selectedNode && props.selectedNode.name === node.name
+  props.selectedNode && props.selectedNode._id === node._id
 
 const selectNode = (node: Node) => {
   emit('select', node)
