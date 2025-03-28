@@ -27,6 +27,10 @@ yarn build
 yarn start
 ```
 
+## Demo
+
+https://github.com/user-attachments/assets/75f881d5-85de-443e-9097-80578ba07304
+
 ## TODO 
 
 * PGN input needs validation
