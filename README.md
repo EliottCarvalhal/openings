@@ -1,6 +1,6 @@
-# Nuxt 3 Minimal Starter
+## Chess openings
+A small application to store openings in a home-brewed recurisve file system. These openings can then be replayed in the "Explorer" portion of the application. 
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 ## Setup
 
