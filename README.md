@@ -34,6 +34,7 @@ https://github.com/user-attachments/assets/75f881d5-85de-443e-9097-80578ba07304
 ## TODO 
 
 * PGN input needs validation
+* Interface to create folders instead of having to go directly through insomnia etc
 * Upgrade Chessboard UI/UX
 * Implement support for free moves on board
 * Rework home query for exploring saved PGN's
